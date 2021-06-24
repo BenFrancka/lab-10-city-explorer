@@ -1,4 +1,4 @@
-const { locationMunger, weatherMunger } = require('../lib/munge-utils.js');
+const { locationMunger, weatherMunger, reviewMunger } = require('../lib/munge-utils.js');
 
 require('dotenv').config();
 
@@ -963,6 +963,77 @@ describe('munge functions', () => {
     };
 
     const actual = weatherMunger(input);
+
+    expect(actual).toEqual(expectation);
+  });
+
+  test('takes in review data and turns it into a user friendly object', () => {
+    const expectation = [
+      {
+        name: expect.any(String),
+        image_url: expect.any(String),
+        rating: expect.any(Number),
+        url: expect.any(String)
+      }
+    ];
+
+    const input = {
+      'businesses': [
+        {
+          'id': 'XeVsGODZ48qzRL3nH61UZw',
+          'alias': 'down-south-seafood-midland',
+          'name': 'Down South Seafood',
+          'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/DhIUuCeQxUGGUxrgpQSrxQ/o.jpg',
+          'is_closed': false,
+          'url': 'https://www.yelp.com/biz/down-south-seafood-midland?adjust_creative=KXWggMsjK6LLZhYXzc_W3Q&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=KXWggMsjK6LLZhYXzc_W3Q',
+          'review_count': 5,
+          'categories': [
+            {
+              'alias': 'foodtrucks',
+              'title': 'Food Trucks'
+            },
+            {
+              'alias': 'seafood',
+              'title': 'Seafood'
+            },
+            {
+              'alias': 'cajun',
+              'title': 'Cajun/Creole'
+            }
+          ],
+          'rating': 4.0,
+          'coordinates': {
+            'latitude': 32.0555791,
+            'longitude': -102.2319048
+          },
+          'transactions': [],
+          'location': {
+            'address1': '',
+            'address2': '',
+            'address3': '',
+            'city': 'Midland',
+            'zip_code': '79707',
+            'country': 'US',
+            'state': 'TX',
+            'display_address': [
+              'Midland, TX 79707'
+            ]
+          },
+          'phone': '',
+          'display_phone': '',
+          'distance': 32066.619084251306
+        }
+      ],
+      'total': 1,
+      'region': {
+        'center': {
+          'longitude': -102.0103767,
+          'latitude': 31.83688
+        }
+      }
+    };
+    
+    const actual = reviewMunger(input);
 
     expect(actual).toEqual(expectation);
   });
