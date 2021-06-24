@@ -1,4 +1,4 @@
-const { mungeLocation, mungeWeather } = require('../lib/munge.js');
+const { locationMunger, weatherMunger } = require('../lib/munge-utils.js');
 
 require('dotenv').config();
 
